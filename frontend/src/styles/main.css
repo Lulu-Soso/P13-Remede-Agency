@@ -56,6 +56,11 @@ body {
   margin-right: 0.5rem;
 }
 
+.main-nav-item svg {
+  font-size: 1.2rem;
+  margin-right: 0.2rem;
+}
+
 .main-nav-item:hover {
   text-decoration: underline;
 }
@@ -175,7 +180,8 @@ body {
 }
 
 .sign-in-icon {
-  font-size: 5rem;
+  /*font-size: 5rem;*/
+  font-size: 1.2rem;
 }
 
 .input-remember {

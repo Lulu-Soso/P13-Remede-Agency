@@ -1,9 +1,16 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 
 const SignIn = () => {
   return (
       <div>
-        <a className="main-nav-item" href="#"><i className="fa fa-user-circle"></i>Sign In</a>
+        <Link to="/login" className="main-nav-item">
+          {/*<i className="fa fa-user-circle"></i>*/}
+          <FontAwesomeIcon icon={faUserCircle} />
+          Sign In
+        </Link>
       </div>
   );
 };

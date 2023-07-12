@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FeatureItem = ({img, title, text, altText, }) => {
+const FeatureItem = ({img, altText, title, text}) => {
   return (
       <div className="feature-item">
         <img src={img} alt={altText} className="feature-icon" />

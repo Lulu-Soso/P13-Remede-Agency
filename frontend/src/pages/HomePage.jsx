@@ -6,14 +6,14 @@ import Footer from "../components/Footer";
 
 const HomePage = () => {
   return (
-      <div>
+      <body>
         <Header />
         <main>
           <Hero />
           <Features />
         </main>
         <Footer />
-      </div>
+      </body>
   );
 };
 

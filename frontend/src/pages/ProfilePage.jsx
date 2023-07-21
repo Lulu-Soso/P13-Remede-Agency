@@ -1,12 +1,9 @@
 import React from 'react';
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import TransactionItem from "../components/TransactionItem";
 
 const ProfilePage = () => {
   return (
-      <body>
-        <Header/>
+      <>
         <main className="main bg-dark">
           <div className="header">
             <h1>
@@ -21,8 +18,7 @@ const ProfilePage = () => {
           <TransactionItem title="Argent Bank Savings (x6712)" accountAmount="$10,928.42" balance="Available Balance"/>
           <TransactionItem title="Argent Bank Credit Card (x8349)" accountAmount="$184.30" balance="Current Balance"/>
         </main>
-        <Footer/>
-      </body>
+      </>
   );
 };
 

@@ -1,7 +1,10 @@
 import React from 'react';
 import TransactionItem from "../components/TransactionItem";
+// import {useSelector} from "react-redux"
 
 const ProfilePage = () => {
+  // const firstName = useSelector(state = state.user.user?.firstName || '')
+
   return (
       <>
         <main className="main bg-dark">

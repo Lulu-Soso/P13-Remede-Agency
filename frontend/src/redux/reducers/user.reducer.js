@@ -1,31 +1,32 @@
-import { LOGIN, LOGOUT, SIGNUP } from "../actions/user.action";
+import { LOGIN_SUCCESS, LOGIN_FAILURE, SET_USER_DETAILS } from '../actions/user.action';
 
 const initialState = {
-  // email: null,
-  // firstName: null,
-  // lastName: null,
-  // isLoggedIn: false,
+  email: null,
+  isLoggedIn: false,
+  firstName: null,
+  lastName: null,
+  _id: null,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         email: action.payload.email,
+        isLoggedIn: true,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
-        isLoggedIn: true,
       };
-    case LOGOUT:
-      return initialState; // Retourne l'état initial lors de la déconnexion
-    case SIGNUP:
+    case LOGIN_FAILURE:
       return {
         ...state,
-        email: action.payload.email,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        isLoggedIn: true,
+        error: action.payload,
+      };
+    case SET_USER_DETAILS:
+      return {
+        ...state,
+        _id: action.payload._id, // Mettez à jour le state avec l'id de l'utilisateur
       };
     default:
       return state;

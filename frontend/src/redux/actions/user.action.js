@@ -1,81 +1,89 @@
-import axios from 'axios';
+// user.action.js
+import apiRequests from "../../service/apiRequests";
 
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const SET_USER_DETAILS = 'SET_USER_DETAILS';
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const GET_USER_DETAILS_SUCCESS = "GET_USER_DETAILS_SUCCESS";
+export const GET_USER_DETAILS_FAILURE = "GET_USER_DETAILS_FAILURE";
+export const LOGOUT = "LOGOUT";
 
-export const loginSuccess = (email, firstName, lastName, id) => ({
+export const loginSuccess = (userData, token) => ({
   type: LOGIN_SUCCESS,
-  payload: { email, firstName, lastName, id},
+  payload: { userData, token },
 });
 
 export const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
-  payload: error,
+  payload: { error },
 });
 
-export const setUserDetails = (userDetails) => ({
-  type: SET_USER_DETAILS,
-  payload: userDetails,
+export const getUserDetailsSuccess = (userData, token) => ({
+  type: GET_USER_DETAILS_SUCCESS,
+  payload: { userData, token },
 });
 
-export const loginUser = (email, password) => {
-  return (dispatch) => {
-    return axios
-      .post('http://localhost:3001/api/v1/user/login', {
-        email,
-        password,
-      })
-      .then((response) => {
-        console.log(response.data.body);
+export const getUserDetailsFailure = (error) => ({
+  type: GET_USER_DETAILS_FAILURE,
+  payload: { error },
+});
 
-        if (response.data.body.token) {
-          // Dispatch a success action with user details
-          const { firstName, lastName, email, _id } = response.data.body;
-          dispatch(loginSuccess(email, firstName, lastName, _id));
+export const logout = () => ({
+  type: LOGOUT,
+});
 
-          // Call the getUserDetails function to get the user's details from the database
-          dispatch(getUserDetails(response.data.body.token)).then(() => {
-            // Redirect to the profile page
-            // navigate('/profile');
-          });
-        } else {
-          alert('Invalid username or password.');
-        }
-      })
-      .catch((error) => {
-        // Dispatch a failure action
-        dispatch(loginFailure(error.response.data));
-      });
-  };
+export const login = (email, password) => async (dispatch) => {
+  // Vérifier si l'email et le mot de passe sont présents et non vides
+  if (!email.trim() || !password.trim()) {
+    dispatch(loginFailure("Please enter both email and password."));
+    return; // Arrêter l'exécution de la fonction
+  }
+
+  try {
+    // Appeler l'API pour obtenir le token
+    const token = await apiRequests.getToken(email, password);
+
+    // Vérifier si le token est valide
+    if (!token) {
+      dispatch(loginFailure("Invalid email or password."));
+      return; // Arrêter l'exécution de la fonction
+    }
+
+    // Appeler l'API pour obtenir les données utilisateur
+    const userData = await apiRequests.userData(token);
+
+    // Vérifier si les données utilisateur sont valides
+    if (!userData) {
+      dispatch(loginFailure("User data not found."));
+      return; // Arrêter l'exécution de la fonction
+    }
+
+    // Si toutes les vérifications sont réussies, dispatch l'action de connexion réussie
+    dispatch(loginSuccess(userData, token));
+
+    // Sauvegarde des données dans localStorage
+    localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("token", token);
+  } catch (error) {
+    dispatch(loginFailure("Login failed. Please check your credentials."));
+    console.error("Login Error:", error);
+  }
 };
 
+export const getUserDetails = (token) => async (dispatch) => {
+  try {
+    // Appeler l'API pour obtenir les détails de l'utilisateur
+    const userData = await apiRequests.userData(token);
 
-export const getUserDetails = (token) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(
-        'http://localhost:3001/api/v1/user/profile',
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.data && response.data.body) {
-        const { firstName, lastName, email, id } = response.data.body;
-        console.log('User details:', firstName, lastName, email, id);
-
-        // Dispatch the setUserDetails action to update the state with user details
-        dispatch(setUserDetails({ firstName, lastName, email, id }));
-      } else {
-        console.log('User details not found.');
-      }
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-      throw error;
+    // Vérifier si les données utilisateur sont valides
+    if (!userData) {
+      dispatch(getUserDetailsFailure("User data not found."));
+      return; // Arrêter l'exécution de la fonction
     }
-  };
+
+    // Si les données utilisateur sont disponibles, dispatch l'action de réussite avec les détails de l'utilisateur
+    dispatch(getUserDetailsSuccess(userData, token));
+  } catch (error) {
+    dispatch(getUserDetailsFailure("Failed to get user details."));
+    console.error("Get User Details Error:", error);
+  }
 };

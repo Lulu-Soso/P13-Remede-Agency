@@ -1,13 +1,13 @@
-// user.reducer.js
-import { LOGIN_SUCCESS, LOGIN_FAILURE, SET_USER_DETAILS } from '../actions/user.action';
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from "../actions/user.action";
+
+// Récupérer les données du localStorage s'ils existent
+const storedUserData = JSON.parse(localStorage.getItem('userData'));
+const storedToken = localStorage.getItem('token');
 
 const initialState = {
-  // isLoggedIn: false,
-  // firstName: '',
-  // lastName: '',
-  // email: '',
-  // id: '',
-  // error: null,
+  userData: storedUserData || {}, // Définir userData à partir des données du localStorage
+  token: storedToken || '', // Définir le token à partir des données du localStorage
+  error: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -15,30 +15,22 @@ const userReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        isLoggedIn: true,
-        // firstName: action.payload.firstName,
-        // lastName: action.payload.lastName,
-        // email: action.payload.email,
-        id: action.payload.id,
+        userData: action.payload.userData,
+        token: action.payload.token,
         error: null,
       };
     case LOGIN_FAILURE:
       return {
         ...state,
-        isLoggedIn: false,
-        // firstName: '',
-        // lastName: '',
-        // email: '',
-        // id: '',
-        error: action.payload,
+        error: action.payload.error,
       };
-    case SET_USER_DETAILS:
+    case LOGOUT:
+      localStorage.removeItem("userData");
+      localStorage.removeItem("token");
       return {
         ...state,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        email: action.payload.email,
-        id: action.payload.id,
+        userData: null,
+        token: null,
         error: null,
       };
     default:
@@ -47,3 +39,4 @@ const userReducer = (state = initialState, action) => {
 };
 
 export default userReducer;
+

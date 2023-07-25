@@ -3,25 +3,24 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
-import { isEmpty } from "../utils/isEmpty";
 
 const SignIn = () => {
+  // Accéder aux informations de l'utilisateur depuis le state Redux
   const user = useSelector((state) => state.user);
-  console.log(user);
 
   return (
     <>
-      {!isEmpty(user) ? (
+      {user.userData && user.userData.firstName ? (
         <div className="info-logged">
           <div className="nav-logged-in">
             <FontAwesomeIcon icon={faUserCircle} />
-            <p>{user.firstName}</p>
+            <p>{user.userData.firstName}</p>
           </div>
           <div className="nav-logged-out">
-          <Link to="/logout" className="main-nav-item">
-            <FontAwesomeIcon icon={faUserCircle} />
-            Signout
-          </Link>
+            <Link to="/logout" className="main-nav-item">
+              <FontAwesomeIcon icon={faUserCircle} />
+              Signout
+            </Link>
           </div>
         </div>
       ) : (

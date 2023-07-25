@@ -1,39 +1,49 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../redux/actions/user.action';
+// LoginPage.js
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { login, getUserDetails } from '../redux/actions/user.action';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const loginError = useSelector((state) => state.user.error);
+  const userData = useSelector((state) => state.user.userData);
+
+  // Utilisez useEffect pour surveiller les changements de userData
+  useEffect(() => {
+    // userData est mis à jour, vérifiez si les données utilisateur sont valides
+    if (userData && userData.firstName && userData.lastName) {
+      navigate("/profile");
+    }
+  }, [userData, navigate]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-  
-      // Call the loginUser action and pass email and password as parameters
-      dispatch(loginUser(email, password))
-        .then(() => {
-          // Redirect to the profile page after successful login
-          navigate('/profile');
-        })
-        .catch((error) => {
-          // Handle login failure
-          console.error('Error logging in:', error);
-          alert('Invalid username or password.');
-        });
-    };
+    try {
+      const response = await dispatch(login(email, password));
+      console.log(response);
+      if (response && response.data.token) {
+        // Vérifier les détails de l'utilisateur avant de naviguer
+        await dispatch(getUserDetails(response.data.token));
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+    }
+  };
 
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
         <FontAwesomeIcon icon={faUserCircle} className="sign-in-icon" />
         <h1>Sign In</h1>
-
-        <form onSubmit={handleSubmit}>
+        {loginError && <p style={{ color: "red" }}>{loginError}</p>}
+        <form onSubmit={handleLogin}>
           <div className="input-wrapper">
             <label htmlFor="email">Email</label>
             <input

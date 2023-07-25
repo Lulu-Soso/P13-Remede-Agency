@@ -1,11 +1,13 @@
+// user.reducer.js
 import { LOGIN_SUCCESS, LOGIN_FAILURE, SET_USER_DETAILS } from '../actions/user.action';
 
 const initialState = {
-  email: null,
   isLoggedIn: false,
-  firstName: null,
-  lastName: null,
-  _id: null,
+  firstName: '',
+  lastName: '',
+  email: '',
+  id: '',
+  error: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -13,20 +15,31 @@ const userReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        email: action.payload.email,
         isLoggedIn: true,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
+        // firstName: action.payload.firstName,
+        // lastName: action.payload.lastName,
+        // email: action.payload.email,
+        id: action.payload.id,
+        error: null,
       };
     case LOGIN_FAILURE:
       return {
         ...state,
+        isLoggedIn: false,
+        // firstName: '',
+        // lastName: '',
+        // email: '',
+        // id: '',
         error: action.payload,
       };
     case SET_USER_DETAILS:
       return {
         ...state,
-        _id: action.payload._id, // Mettez à jour le state avec l'id de l'utilisateur
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        id: action.payload.id,
+        error: null,
       };
     default:
       return state;

@@ -295,3 +295,21 @@ body {
     width: 200px;
   }
 }
+
+
+/***********************/
+.info-logged {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logged-in {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logged-out {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}

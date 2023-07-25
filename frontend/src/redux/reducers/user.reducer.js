@@ -2,12 +2,12 @@
 import { LOGIN_SUCCESS, LOGIN_FAILURE, SET_USER_DETAILS } from '../actions/user.action';
 
 const initialState = {
-  isLoggedIn: false,
-  firstName: '',
-  lastName: '',
-  email: '',
-  id: '',
-  error: null,
+  // isLoggedIn: false,
+  // firstName: '',
+  // lastName: '',
+  // email: '',
+  // id: '',
+  // error: null,
 };
 
 const userReducer = (state = initialState, action) => {

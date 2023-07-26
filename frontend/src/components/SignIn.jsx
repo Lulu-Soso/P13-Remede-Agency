@@ -1,12 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../redux/actions/user.action";
 
 const SignIn = () => {
   // Accéder aux informations de l'utilisateur depuis le state Redux
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/");
+    console.log(dispatch(logoutUser()));
+  };
 
   return (
     <>
@@ -17,10 +26,10 @@ const SignIn = () => {
             <p>{user.userData.firstName}</p>
           </div>
           <div className="nav-logged-out">
-            <Link to="/logout" className="main-nav-item">
+            <button className="main-nav-item" onClick={() => handleLogout()}>
               <FontAwesomeIcon icon={faUserCircle} />
               Signout
-            </Link>
+            </button>
           </div>
         </div>
       ) : (

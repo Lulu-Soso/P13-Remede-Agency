@@ -316,10 +316,10 @@ body {
 }
 
 /* edit-form */
-.edit-form {
+/* .edit-form {
   display: flex;
   justify-content: center;
-}
+} */
 
 .edit-input input{
   min-width: 200px;

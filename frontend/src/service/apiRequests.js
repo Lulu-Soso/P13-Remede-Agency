@@ -29,7 +29,7 @@ const apiRequests = {
   userEdit: (firstName, lastName, token) => {
     apiRequests.setBearer(token);
 
-    return axios.put("/login", { firstName, lastName })
+    return axios.put("/profile", { firstName, lastName })
       .then(response => response.data.body)
       .catch(error => {
         console.error('Error:', error);

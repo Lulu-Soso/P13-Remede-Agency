@@ -3,8 +3,8 @@ import apiRequests from "../../service/apiRequests";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
-export const GET_USER_DETAILS_SUCCESS = "GET_USER_DETAILS_SUCCESS";
-export const GET_USER_DETAILS_FAILURE = "GET_USER_DETAILS_FAILURE";
+export const EDIT_SUCCESS = "EDIT_SUCCESS";
+export const EDIT_FAILURE = "EDIT_FAILURE";
 export const LOGOUT = "LOGOUT";
 
 export const loginSuccess = (userData, token) => ({
@@ -12,30 +12,31 @@ export const loginSuccess = (userData, token) => ({
   payload: { userData, token },
 });
 
-export const loginFailure = (error) => ({
+export const loginFailure = (errorState) => ({
   type: LOGIN_FAILURE,
-  payload: { error },
+  payload: { errorState },
 });
 
-export const getUserDetailsSuccess = (userData, token) => ({
-  type: GET_USER_DETAILS_SUCCESS,
-  payload: { userData, token },
+export const editSuccess = (userData) => ({
+  type: EDIT_SUCCESS,
+  payload: { userData },
 });
 
-export const getUserDetailsFailure = (error) => ({
-  type: GET_USER_DETAILS_FAILURE,
-  payload: { error },
+export const editFailure = (errorState) => ({
+  type: EDIT_FAILURE,
+  payload: { errorState },
 });
 
+// Action pour réinitialiser le state de Redux lors de la déconnexion
 export const logout = () => ({
   type: LOGOUT,
 });
 
-export const login = (email, password) => async (dispatch) => {
+export const loginUser = (email, password) => async (dispatch) => {
   // Vérifier si l'email et le mot de passe sont présents et non vides
   if (!email.trim() || !password.trim()) {
     dispatch(loginFailure("Please enter both email and password."));
-    return; // Arrêter l'exécution de la fonction
+    return;
   }
 
   try {
@@ -45,7 +46,7 @@ export const login = (email, password) => async (dispatch) => {
     // Vérifier si le token est valide
     if (!token) {
       dispatch(loginFailure("Invalid email or password."));
-      return; // Arrêter l'exécution de la fonction
+      return;
     }
 
     // Appeler l'API pour obtenir les données utilisateur
@@ -54,7 +55,7 @@ export const login = (email, password) => async (dispatch) => {
     // Vérifier si les données utilisateur sont valides
     if (!userData) {
       dispatch(loginFailure("User data not found."));
-      return; // Arrêter l'exécution de la fonction
+      return;
     }
 
     // Si toutes les vérifications sont réussies, dispatch l'action de connexion réussie
@@ -69,21 +70,31 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const getUserDetails = (token) => async (dispatch) => {
+export const editUser = (firstName, lastName) => async (dispatch, getState) => {
+  const { token } = getState().user;
+
   try {
-    // Appeler l'API pour obtenir les détails de l'utilisateur
-    const userData = await apiRequests.userData(token);
+    // Appeler l'API pour éditer les données de l'utilisateur
+    const userData = await apiRequests.userEdit(firstName, lastName, token);
 
-    // Vérifier si les données utilisateur sont valides
-    if (!userData) {
-      dispatch(getUserDetailsFailure("User data not found."));
-      return; // Arrêter l'exécution de la fonction
-    }
+    // Si les données utilisateur sont disponibles, dispatch l'action de réussite avec les nouvelles données de l'utilisateur
+    dispatch(editSuccess(userData));
 
-    // Si les données utilisateur sont disponibles, dispatch l'action de réussite avec les détails de l'utilisateur
-    dispatch(getUserDetailsSuccess(userData, token));
+    // Mettre à jour le localStorage avec les nouvelles données de l'utilisateur
+    const updatedUserData = { ...getState().user.userData, firstName, lastName };
+    localStorage.setItem("userData", JSON.stringify(updatedUserData));
   } catch (error) {
-    dispatch(getUserDetailsFailure("Failed to get user details."));
-    console.error("Get User Details Error:", error);
+    dispatch(editFailure("Failed to edit user details."));
+    console.error("Edit User Error:", error);
   }
+};
+
+
+export const logoutUser = () => (dispatch) => {
+  // Supprimer le token du local storage
+  localStorage.removeItem("token");
+  localStorage.removeItem("userData");
+
+  // Dispatch l'action de déconnexion pour réinitialiser le state de Redux
+  dispatch({ type: LOGOUT });
 };

@@ -76,7 +76,7 @@ body {
 }
 
 .hero {
-  background-image: url('../../assets/img/bank-tree.jpeg');
+  background-image: url("../../assets/img/bank-tree.jpeg");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -180,7 +180,6 @@ body {
 }
 
 .sign-in-icon {
-  /*font-size: 5rem;*/
   font-size: 1.2rem;
 }
 
@@ -262,7 +261,7 @@ body {
   background-color: #00bc77;
   color: #fff;
   font-weight: bold;
-  padding: 10px;
+  padding: 0.6rem;
   cursor: pointer;
 }
 
@@ -274,7 +273,7 @@ body {
 .transaction-button {
   display: block;
   width: 100%;
-  padding: 8px;
+  padding: 0.5rem;
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 1rem;
@@ -297,8 +296,7 @@ body {
   }
 }
 
-
-/***********************/
+/********** UserNavbar **********/
 .info-logged {
   display: flex;
   align-items: center;
@@ -317,7 +315,7 @@ body {
   color: #2c3e50;
 }
 
-/************/
+/********** WelcomeHeader **********/
 .welcome-back {
   margin: 1.5rem 0 0.3rem;
 }
@@ -326,20 +324,18 @@ body {
   font-weight: 500;
   margin: 0;
   padding: 0;
-
 }
 
 .edit-input {
   display: flex;
   justify-content: center;
   gap: 1rem;
-
 }
 
-.edit-input input{
+.edit-input input {
   min-width: 200px;
   height: 30px;
-  margin: 10px 0;
+  margin: 0.6rem 0;
 }
 
 .edit-btn-form {
@@ -348,7 +344,7 @@ body {
   gap: 1rem;
 }
 
-.edit-btn-form button{
+.edit-btn-form button {
   width: 6%;
   min-width: 80px;
   height: 25px;

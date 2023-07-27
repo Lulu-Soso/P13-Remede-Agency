@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editFailure, editSuccess, editUser } from "../redux/actions/user.action";
+// import { useNavigate } from "react-router-dom";
 
 const WelcomeHeader = () => {
   const user = useSelector((state) => state.user);
@@ -29,7 +30,6 @@ const WelcomeHeader = () => {
   const handleSaveBtn = async () => {
     // Vérifier si les champs sont vides
     if (!firstNameInput.trim() || !lastNameInput.trim()) {
-    //   setErrorMessage("Please fill in both Firstname and Lastname.");
       dispatch(editFailure("Please fill in both Firstname and Lastname."))
       return;
     }
@@ -51,8 +51,8 @@ const WelcomeHeader = () => {
 
       // Mettre à jour le localStorage avec les nouvelles données de l'utilisateur
       localStorage.setItem("userData", JSON.stringify(updatedUserData));
+
     } catch (error) {
-      // Gérer les erreurs ici, si nécessaire
       console.error("Edit User Error:", error);
       dispatch(editFailure("Failed to edit user details."));
     }

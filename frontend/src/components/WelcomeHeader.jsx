@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { editSuccess, editUser } from "../redux/actions/user.action";
+import { editFailure, editSuccess, editUser } from "../redux/actions/user.action";
 
 const WelcomeHeader = () => {
   const user = useSelector((state) => state.user);
@@ -27,70 +27,87 @@ const WelcomeHeader = () => {
   };
 
   const handleSaveBtn = async () => {
-    // Appeler l'action pour éditer l'utilisateur avec les nouvelles valeurs de firstNameInput et lastNameInput
-    await dispatch(editUser(firstNameInput, lastNameInput));
+    // Vérifier si les champs sont vides
+    if (!firstNameInput.trim() || !lastNameInput.trim()) {
+    //   setErrorMessage("Please fill in both Firstname and Lastname.");
+      dispatch(editFailure("Please fill in both Firstname and Lastname."))
+      return;
+    }
 
-    // Mettre à jour les champs d'édition avec les nouvelles données de l'utilisateur après la sauvegarde réussie
-    setIsEditVisible(false);
+    try {
+      // Appeler l'action pour éditer l'utilisateur avec les nouvelles valeurs de firstNameInput et lastNameInput
+      await dispatch(editUser(firstNameInput, lastNameInput));
 
-    // Mettre à jour le state avec les nouvelles données de l'utilisateur après la sauvegarde réussie
-    const updatedUserData = { ...user.userData, firstName: firstNameInput, lastName: lastNameInput };
-    dispatch(editSuccess(updatedUserData));
+      // Mettre à jour les champs d'édition avec les nouvelles données de l'utilisateur après la sauvegarde réussie
+      setIsEditVisible(false);
 
-    // Mettre à jour le localStorage avec les nouvelles données de l'utilisateur
-    localStorage.setItem("userData", JSON.stringify(updatedUserData));
+      // Mettre à jour le state avec les nouvelles données de l'utilisateur après la sauvegarde réussie
+      const updatedUserData = {
+        ...user.userData,
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+      };
+      dispatch(editSuccess(updatedUserData));
+
+      // Mettre à jour le localStorage avec les nouvelles données de l'utilisateur
+      localStorage.setItem("userData", JSON.stringify(updatedUserData));
+    } catch (error) {
+      // Gérer les erreurs ici, si nécessaire
+      console.error("Edit User Error:", error);
+      dispatch(editFailure("Failed to edit user details."));
+    }
   };
-
-  // Vérifier si l'utilisateur est connecté en vérifiant si user.userData existe
-  const isUserLoggedIn = !!user.userData;
 
   return (
     <div className="header">
-      {isUserLoggedIn && (
+      <h1 className="welcome-back">Welcome back</h1>
+
+      {!isEditVisible ? (
+        <div className="welcome-name">
+          <p className="name">
+            {user.userData.firstName} {user.userData.lastName}
+          </p>
+          <br />
+          <button className="edit-button" type="button" onClick={handleEditBtn}>
+            Edit Name
+          </button>
+        </div>
+      ) : (
         <>
-          <h1 id="welcome-back">
-            Welcome back
-            <br />
-            {isEditVisible ? (
-              <span className="edit-input">
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  value={firstNameInput}
-                  onChange={(e) => setFirstNameInput(e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  value={lastNameInput}
-                  onChange={(e) => setLastNameInput(e.target.value)}
-                  required
-                />
-              </span>
-            ) : (
-              <span id="welcome-name">
-                {user.userData.firstName} {user.userData.lastName}
-              </span>
-            )}
-          </h1>
-          {!isEditVisible && (
-            <button className="edit-button" type="button" onClick={handleEditBtn}>
-              Edit Name
+          {user.errorState && <p style={{ color: "red" }}>{user.errorState}</p>}
+          <div className="edit-input">
+            <input
+              type="text"
+              placeholder="First Name"
+              value={firstNameInput}
+              onChange={(e) => setFirstNameInput(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastNameInput}
+              onChange={(e) => setLastNameInput(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="edit-btn-form">
+            <button
+              type="button"
+              className="save-button"
+              onClick={handleSaveBtn}
+            >
+              Save
             </button>
-          )}
-          {isEditVisible && (
-            <div id="edit-section">
-              <div className="edit-btn-form">
-                <button type="button" className="save-button" onClick={handleSaveBtn}>
-                  Save
-                </button>
-                <button type="button" className="cancel-button" onClick={handleCancelEditBtn}>
-                  Cancel
-                </button>
-              </div>
-            </div>
-          )}
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={handleCancelEditBtn}
+            >
+              Cancel
+            </button>
+          </div>
         </>
       )}
     </div>

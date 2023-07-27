@@ -315,12 +315,16 @@ body {
   align-items: center;
 }
 
-/* edit-form */
-/* .edit-form {
-  display: flex;
-  justify-content: center;
-} */
+/************/
+.welcome-back {
+  margin: 1.5rem 0 0.3rem;
+}
+.name {
+  font-size: 2em;
+  margin: 0;
+  padding: 0;
 
+}
 .edit-input input{
   min-width: 200px;
   height: 30px;

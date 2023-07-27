@@ -1,4 +1,3 @@
-// user.action.js
 import apiRequests from "../../service/apiRequests";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -27,7 +26,6 @@ export const editFailure = (errorState) => ({
   payload: { errorState },
 });
 
-// Action pour réinitialiser le state de Redux lors de la déconnexion
 export const logout = () => ({
   type: LOGOUT,
 });
@@ -40,25 +38,20 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 
   try {
-    // Appeler l'API pour obtenir le token
     const token = await apiRequests.getToken(email, password);
 
-    // Vérifier si le token est valide
     if (!token) {
       dispatch(loginFailure("Invalid email or password."));
       return;
     }
 
-    // Appeler l'API pour obtenir les données utilisateur
     const userData = await apiRequests.userData(token);
 
-    // Vérifier si les données utilisateur sont valides
     if (!userData) {
       dispatch(loginFailure("User data not found."));
       return;
     }
 
-    // Si toutes les vérifications sont réussies, dispatch l'action de connexion réussie
     dispatch(loginSuccess(userData, token));
 
     // Sauvegarde des données dans localStorage
@@ -74,14 +67,18 @@ export const editUser = (firstName, lastName) => async (dispatch, getState) => {
   const { token } = getState().user;
 
   try {
-    // Appeler l'API pour éditer les données de l'utilisateur
     const userData = await apiRequests.userEdit(firstName, lastName, token);
 
     // Si les données utilisateur sont disponibles, dispatch l'action de réussite avec les nouvelles données de l'utilisateur
     dispatch(editSuccess(userData));
 
     // Mettre à jour le localStorage avec les nouvelles données de l'utilisateur
-    const updatedUserData = { ...getState().user.userData, firstName, lastName };
+    const updatedUserData = {
+      ...getState().user.userData,
+      firstName,
+      lastName,
+    };
+
     localStorage.setItem("userData", JSON.stringify(updatedUserData));
   } catch (error) {
     dispatch(editFailure("Failed to edit user details."));
@@ -89,9 +86,7 @@ export const editUser = (firstName, lastName) => async (dispatch, getState) => {
   }
 };
 
-
 export const logoutUser = () => (dispatch) => {
-  // Supprimer le token du local storage
   localStorage.removeItem("token");
   localStorage.removeItem("userData");
 

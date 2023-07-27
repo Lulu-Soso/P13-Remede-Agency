@@ -302,17 +302,19 @@ body {
 .info-logged {
   display: flex;
   align-items: center;
+  gap: 0.3rem;
+  font-weight: bold;
 }
 
-.nav-logged-in {
+.info-logged button {
+  border: none;
+  background-color: transparent;
   display: flex;
   align-items: center;
-}
-
-.nav-logged-out {
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
+  gap: 0.2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #2c3e50;
 }
 
 /************/
@@ -321,20 +323,41 @@ body {
 }
 .name {
   font-size: 2em;
+  font-weight: 500;
   margin: 0;
   padding: 0;
 
 }
+
+.edit-input {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+}
+
 .edit-input input{
   min-width: 200px;
   height: 30px;
-  margin: 10px 5px;
+  margin: 10px 0;
+}
+
+.edit-btn-form {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .edit-btn-form button{
   width: 6%;
   min-width: 80px;
   height: 25px;
-  margin: 0 5px;
   cursor: pointer;
+  color: #00bc77;
+  border-color: #00bc77;
+}
+
+.edit-btn-form button:hover {
+  background-color: #00bc77;
+  color: #fff;
 }

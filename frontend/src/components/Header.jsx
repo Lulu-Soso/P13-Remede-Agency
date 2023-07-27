@@ -1,12 +1,12 @@
 import React from 'react';
 import Logo from "./Logo";
-import SignIn from "./SignIn";
+import UserNavbar from './UserNavbar';
 
 const Header = () => {
   return (
         <nav className="main-nav">
           <Logo/>
-          <SignIn/>
+          <UserNavbar />
         </nav>
   );
 };

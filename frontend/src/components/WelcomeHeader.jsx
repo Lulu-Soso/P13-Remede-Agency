@@ -65,7 +65,7 @@ const WelcomeHeader = () => {
       {!isEditVisible ? (
         <div className="welcome-name">
           <p className="name">
-            {user.userData.firstName} {user.userData.lastName}
+            {user.userData.firstName} {user.userData.lastName}!
           </p>
           <br />
           <button className="edit-button" type="button" onClick={handleEditBtn}>

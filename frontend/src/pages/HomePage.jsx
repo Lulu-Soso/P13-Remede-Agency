@@ -5,7 +5,7 @@ import Features from "../components/Features";
 const HomePage = () => {
   return (
       <>
-        <main>
+        <main className="main">
           <Hero/>
           <Features/>
         </main>

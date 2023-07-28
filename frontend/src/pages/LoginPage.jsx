@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   const user = useSelector((state) => state.user);
 
-  // Utilisez useEffect pour surveiller les changements de userData
+  // useEffect pour surveiller les changements de userData
   useEffect(() => {
     // userData est mis à jour, vérifiez si les données utilisateur sont valides
     if (user.userData && user.token) {

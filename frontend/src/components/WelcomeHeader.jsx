@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editFailure, editSuccess, editUser } from "../redux/actions/user.action";
-// import { useNavigate } from "react-router-dom";
 
 const WelcomeHeader = () => {
   const user = useSelector((state) => state.user);

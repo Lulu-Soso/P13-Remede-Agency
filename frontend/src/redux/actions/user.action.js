@@ -1,4 +1,5 @@
 import apiRequests from "../../service/apiRequests";
+import { loadingStart, loadingEnd } from "./loader.action";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
@@ -38,6 +39,8 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 
   try {
+    dispatch(loadingStart());
+
     const token = await apiRequests.userToken(email, password);
 
     if (!token) {
@@ -60,6 +63,8 @@ export const loginUser = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch(loginFailure("Login failed. Please check your credentials."));
     console.error("Login Error:", error);
+  } finally {
+    dispatch(loadingEnd()); 
   }
 };
 

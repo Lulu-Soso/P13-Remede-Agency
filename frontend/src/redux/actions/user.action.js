@@ -1,5 +1,4 @@
 import apiRequests from "../../service/apiRequests";
-import { loadingStart, loadingEnd } from "./loader.action";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
@@ -17,9 +16,9 @@ export const loginFailure = (errorState) => ({
   payload: { errorState },
 });
 
-export const editSuccess = (userData) => ({
+export const editSuccess = (userData, token) => ({
   type: EDIT_SUCCESS,
-  payload: { userData },
+  payload: { userData, token },
 });
 
 export const editFailure = (errorState) => ({
@@ -39,7 +38,6 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 
   try {
-    dispatch(loadingStart());
 
     const token = await apiRequests.userToken(email, password);
 
@@ -63,9 +61,7 @@ export const loginUser = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch(loginFailure("Login failed. Please check your credentials."));
     console.error("Login Error:", error);
-  } finally {
-    dispatch(loadingEnd()); 
-  }
+  } 
 };
 
 export const editUser = (firstName, lastName) => async (dispatch, getState) => {
@@ -75,21 +71,15 @@ export const editUser = (firstName, lastName) => async (dispatch, getState) => {
     const userData = await apiRequests.userEdit(firstName, lastName, token);
 
     // Si les données utilisateur sont disponibles, dispatch l'action de réussite avec les nouvelles données de l'utilisateur
-    dispatch(editSuccess(userData));
+    dispatch(editSuccess(userData, token));
 
-    // Mettre à jour le localStorage avec les nouvelles données de l'utilisateur
-    const updatedUserData = {
-      ...getState().user.userData,
-      firstName,
-      lastName,
-    };
-
-    localStorage.setItem("userData", JSON.stringify(updatedUserData));
+    localStorage.setItem("userData", JSON.stringify(userData));
   } catch (error) {
     dispatch(editFailure("Failed to edit user details."));
     console.error("Edit User Error:", error);
   }
 };
+
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");

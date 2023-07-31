@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import Loader from "../components/Loader";
 
 const AuthGuard = ({ children }) => {
   const user = useSelector((state) => state.user);

@@ -1,19 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './styles/main.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, createRoutesFromChildren, Route, RouterProvider } from "react-router-dom";
+import App from "./App";
+import "./styles/main.css";
 
 // Redux
-import { Provider } from 'react-redux';
-import store from './redux/app/store';
+import { Provider } from "react-redux";
+import store from "./redux/app/store";
+import AuthGuard from "./service/AuthGuard";
+import Loader from "./components/Loader";
+
+// React.lazy pour charger dynamiquement les composants de manière asynchrone
+const HomePage = React.lazy(() => import("./pages/HomePage"));
+const LoginPage = React.lazy(() => import("./pages/LoginPage"));
+const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 
 
+const router = createBrowserRouter(
+  createRoutesFromChildren(
+    <Route path="/" element={<App />}>
+        <Route index={true} element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/profile"
+          element={
+            <AuthGuard>
+              <ProfilePage />
+            </AuthGuard>
+          }
+        />
+      </Route>
+  )
+);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+    <React.Suspense fallback={<Loader />}>
+      <RouterProvider router={router} />
+    </React.Suspense>
     </Provider>
   </React.StrictMode>
 );

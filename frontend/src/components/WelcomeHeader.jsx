@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { editFailure, editSuccess, editUser } from "../redux/actions/user.action";
+import { editFailure, editUser } from "../redux/actions/user.action";
 
 const WelcomeHeader = () => {
   const user = useSelector((state) => state.user);
@@ -39,17 +39,6 @@ const WelcomeHeader = () => {
 
       // Mettre à jour les champs d'édition avec les nouvelles données de l'utilisateur après la sauvegarde réussie
       setIsEditVisible(false);
-
-      // Mettre à jour le state avec les nouvelles données de l'utilisateur après la sauvegarde réussie
-      const updatedUserData = {
-        ...user.userData,
-        firstName: firstNameInput,
-        lastName: lastNameInput,
-      };
-      dispatch(editSuccess(updatedUserData));
-
-      // Mettre à jour le localStorage avec les nouvelles données de l'utilisateur
-      localStorage.setItem("userData", JSON.stringify(updatedUserData));
 
     } catch (error) {
       console.error("Edit User Error:", error);

@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/actions/user.action";
 
 const UserNavbar = () => {
-  // Accéder aux informations de l'utilisateur depuis le state Redux
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();

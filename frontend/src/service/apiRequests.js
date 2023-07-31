@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3001/api/v1/user";
 
 const apiRequests = {
-  setBearer: (token) => {
+  getBearer: (token) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   },
 
@@ -22,7 +22,7 @@ const apiRequests = {
   },
 
   userData: async (token) => {
-    apiRequests.setBearer(token);
+    apiRequests.getBearer(token);
 
     try {
       const response = await axios.post("/profile");
@@ -38,7 +38,7 @@ const apiRequests = {
   },
 
   userEdit: async (firstName, lastName, token) => {
-    apiRequests.setBearer(token);
+    apiRequests.getBearer(token);
 
     try {
       const response = await axios.put("/profile", { firstName, lastName });

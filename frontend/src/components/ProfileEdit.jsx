@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editFailure, editUser } from "../redux/actions/user.action";
 
-const WelcomeHeader = () => {
+const ProfileEdit = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [isEditVisible, setIsEditVisible] = useState(false);
@@ -102,4 +102,4 @@ const WelcomeHeader = () => {
   );
 };
 
-export default WelcomeHeader;
+export default ProfileEdit;

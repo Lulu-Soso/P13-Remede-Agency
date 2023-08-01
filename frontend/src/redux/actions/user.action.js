@@ -39,14 +39,14 @@ export const loginUser = (email, password) => async (dispatch) => {
 
   try {
 
-    const token = await apiRequests.userToken(email, password);
+    const token = await apiRequests.loginToken(email, password);
 
     if (!token) {
       dispatch(loginFailure("Invalid email or password."));
       return;
     }
 
-    const userData = await apiRequests.userData(token);
+    const userData = await apiRequests.profileData(token);
 
     if (!userData) {
       dispatch(loginFailure("User data not found."));
@@ -68,7 +68,7 @@ export const editUser = (firstName, lastName) => async (dispatch, getState) => {
   const { token } = getState().user;
 
   try {
-    const userData = await apiRequests.userEdit(firstName, lastName, token);
+    const userData = await apiRequests.profileEdit(firstName, lastName, token);
 
     // Si les données utilisateur sont disponibles, dispatch l'action de réussite avec les nouvelles données de l'utilisateur
     dispatch(editSuccess(userData, token));

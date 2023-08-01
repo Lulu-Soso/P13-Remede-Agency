@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/actions/user.action";
 
-const UserNavbar = () => {
+const Navbar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,4 +44,4 @@ const UserNavbar = () => {
   );
 };
 
-export default UserNavbar;
+export default Navbar;

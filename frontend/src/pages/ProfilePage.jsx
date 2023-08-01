@@ -1,12 +1,13 @@
 import React from "react";
 import TransactionItem from "../components/TransactionItem";
-import WelcomeHeader from "../components/WelcomeHeader";
+// import WelcomeHeader from "../components/WelcomeHeader";
+import ProfileEdit from "../components/ProfileEdit";
 
 const ProfilePage = () => {
 
   return (
     <main className="main bg-dark">
-      <WelcomeHeader />
+      <ProfileEdit />
 
       <h2 className="sr-only">Accounts</h2>
       <TransactionItem

@@ -1,12 +1,12 @@
 import React from 'react';
 import Logo from "./Logo";
-import UserNavbar from './UserNavbar';
+import Navbar from './Navbar';
 
 const Header = () => {
   return (
         <nav className="main-nav">
           <Logo/>
-          <UserNavbar />
+          <Navbar />
         </nav>
   );
 };

@@ -7,7 +7,7 @@ const apiRequests = {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   },
 
-  userToken: async (email, password) => {
+  loginToken: async (email, password) => {
     try {
       const response = await axios.post("/login", { email, password });
       if (response.status === 200) {
@@ -21,7 +21,7 @@ const apiRequests = {
     }
   },
 
-  userData: async (token) => {
+  profileData: async (token) => {
     apiRequests.getBearer(token);
 
     try {
@@ -37,7 +37,7 @@ const apiRequests = {
     }
   },
 
-  userEdit: async (firstName, lastName, token) => {
+  profileEdit: async (firstName, lastName, token) => {
     apiRequests.getBearer(token);
 
     try {

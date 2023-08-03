@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, createRoutesFromChildren, Route, RouterProvider } from "react-router-dom";
 import App from "./App";
-import "./styles/main.css";
+import "./styles/index.scss";
 
 // Redux
 import { Provider } from "react-redux";
@@ -14,6 +14,7 @@ import Loader from "./components/Loader";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const LoginPage = React.lazy(() => import("./pages/LoginPage"));
 const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
+const TransactionsPage = React.lazy(() => import("./pages/TransactionsPage"));
 
 
 const router = createBrowserRouter(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
             </AuthGuard>
           }
         />
+        <Route path="/transactions" element={<TransactionsPage />} />
       </Route>
   )
 );

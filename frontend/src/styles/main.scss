@@ -13,13 +13,6 @@ body {
   min-height: 100vh;
 }
 
-.app-container {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 .main {
   flex: 1;
 }
@@ -263,20 +256,6 @@ body {
   flex: 1;
 }
 
-.edit-button {
-  border-color: #00bc77;
-  background-color: #00bc77;
-  color: #fff;
-  font-weight: bold;
-  padding: 0.6rem;
-  cursor: pointer;
-}
-
-.header {
-  color: #fff;
-  margin-bottom: 2rem;
-}
-
 .transaction-button {
   display: block;
   width: 100%;
@@ -302,99 +281,4 @@ body {
     width: 200px;
   }
 }
-
-/********** UserNavbar **********/
-.info-logged {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-weight: bold;
-}
-
-.info-logged button {
-  border: none;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  font-weight: bold;
-  font-size: 1rem;
-  color: #2c3e50;
-}
-
-/********** WelcomeHeader **********/
-.welcome-back {
-  margin: 1.5rem 0 0.3rem;
-}
-.name {
-  font-size: 2em;
-  font-weight: 500;
-  margin: 0;
-  padding: 0;
-}
-
-.edit-input {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.edit-input input {
-  min-width: 200px;
-  height: 30px;
-  margin: 0.6rem 0;
-}
-
-.edit-btn-form {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.edit-btn-form button {
-  width: 6%;
-  min-width: 80px;
-  height: 25px;
-  cursor: pointer;
-  color: #00bc77;
-  border-color: #00bc77;
-}
-
-.edit-btn-form button:hover {
-  background-color: #00bc77;
-  color: #fff;
-}
-
-/********** Loader **********/
-.loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999; /* Assurez-vous que le z-index est supérieur à celui du contenu */
-}
-
-.loader-circle {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #ccc;
-  border-top: 5px solid #00bc77; /* Changez la couleur selon votre préférence */
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 

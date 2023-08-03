@@ -1,18 +1,43 @@
-import React from 'react';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
-const TransactionItem = ({title, accountAmount, balance }) => {
+const TransactionItem = ({ transaction }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpansion = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-      <section className="account">
-        <div className="account-content-wrapper">
-          {/*<h3>Argent Bank Checking (x8349)</h3>*/}
-          <h3>{title}</h3>
-          <p className="account-amount">{accountAmount}</p>
-          <p className="account-amount-description">{balance}</p>
+    <div className="transaction-item">
+      <div className="transaction-header" onClick={toggleExpansion}>
+        <div className="transaction-date">
+          <span>{expanded ? "↑" : "↓"}</span>
+          {transaction.date}
         </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transaction</button>
+        <div>{transaction.description}</div>
+        <div>{transaction.amount}</div>
+        <div>{transaction.balance}</div>
+      </div>
+      {expanded && (
+        <div className="transaction-details">
+          <p>Transaction Type: Electronic</p>
+          <p>
+            Category: Food
+            <button>
+              <FontAwesomeIcon icon={faPen} />
+            </button>
+          </p>
+          <p>
+            notes:
+            <button>
+              <FontAwesomeIcon icon={faPen} />
+            </button>
+          </p>
         </div>
-      </section>
+      )}
+    </div>
   );
 };
 

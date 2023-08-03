@@ -1,0 +1,58 @@
+.header {
+  color: #fff;
+  margin-bottom: 2rem;
+
+  .welcome-back {
+    margin: 1.5rem 0 0.3rem;
+  }
+
+  .welcome-name {
+    .name {
+      font-size: 2em;
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+    }
+
+    .edit-button {
+      border-color: #00bc77;
+      background-color: #00bc77;
+      color: #fff;
+      font-weight: bold;
+      padding: 0.6rem;
+      cursor: pointer;
+    }
+  }
+
+  .edit-input {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    input {
+      min-width: 200px;
+      height: 30px;
+      margin: 0.6rem 0;
+    }
+  }
+
+  .edit-btn-form {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    button {
+      width: 6%;
+      min-width: 80px;
+      height: 25px;
+      cursor: pointer;
+      color: #00bc77;
+      border-color: #00bc77;
+
+      &:hover {
+        background-color: #00bc77;
+        color: #fff;
+      }
+    }
+  }
+}

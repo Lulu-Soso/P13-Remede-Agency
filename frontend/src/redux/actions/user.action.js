@@ -39,7 +39,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 
   try {
 
-    const token = await apiRequests.loginToken(email, password);
+    const token = await apiRequests.getToken(email, password);
 
     if (!token) {
       dispatch(loginFailure("Invalid email or password."));

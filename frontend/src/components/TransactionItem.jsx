@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const TransactionItem = ({ transaction }) => {
   const [expanded, setExpanded] = useState(false);
@@ -11,9 +11,9 @@ const TransactionItem = ({ transaction }) => {
 
   return (
     <div className="transaction-item">
-      <div className="transaction-header" onClick={toggleExpansion}>
+      <div className="transaction-content" onClick={toggleExpansion}>
         <div className="transaction-date">
-          <span>{expanded ? "↑" : "↓"}</span>
+          <span>{expanded ? <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />}</span>
           {transaction.date}
         </div>
         <div>{transaction.description}</div>

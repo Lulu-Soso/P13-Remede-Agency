@@ -70,7 +70,6 @@ export const editUser = (firstName, lastName) => async (dispatch, getState) => {
   try {
     const userData = await apiRequests.profileEdit(firstName, lastName, token);
 
-    // Si les données utilisateur sont disponibles, dispatch l'action de réussite avec les nouvelles données de l'utilisateur
     dispatch(editSuccess(userData, token));
 
     localStorage.setItem("userData", JSON.stringify(userData));
@@ -85,6 +84,5 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");
   localStorage.removeItem("userData");
 
-  // Dispatch l'action de déconnexion pour réinitialiser le state de Redux
   dispatch({ type: LOGOUT });
 };

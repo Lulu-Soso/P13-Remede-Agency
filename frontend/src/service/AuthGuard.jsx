@@ -3,16 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const AuthGuard = ({ children }) => {
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.user.token);
   const navigate = useNavigate();
 
-  // Vérifier si l'utilisateur est connecté en vérifiant si user.userData existe
+  // Vérifier si l'utilisateur est connecté en vérifiant si token existe
   useEffect(() => {
-    if (user.userData.email) {
+    if (token) {
     } else {
       navigate("/login");
     }
-  }, [user.userData, navigate]);
+  }, [token, navigate]);
 
   // Afficher le composant fourni en tant qu'enfant (children) du Route
   return children;

@@ -12,14 +12,15 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.user.token);
 
   // useEffect pour surveiller les changements de userData
   useEffect(() => {
     // userData est mis à jour, vérifiez si les données utilisateur sont valides
-    if (user.userData && user.token) {
+    if (token) {
       navigate("/profile");
     }
-  }, [user.userData, user.token, navigate]);
+  }, [token, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

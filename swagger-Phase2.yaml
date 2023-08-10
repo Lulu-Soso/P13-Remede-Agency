@@ -110,6 +110,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+          
   /accounts/{accountId}/transactions:
     get:
       security:

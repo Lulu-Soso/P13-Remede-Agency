@@ -38,7 +38,6 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 
   try {
-
     const token = await apiRequests.getToken(email, password);
 
     if (!token) {
@@ -61,7 +60,7 @@ export const loginUser = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch(loginFailure("Login failed. Please check your credentials."));
     console.error("Login Error:", error);
-  } 
+  }
 };
 
 export const editUser = (firstName, lastName) => async (dispatch, getState) => {
@@ -78,7 +77,6 @@ export const editUser = (firstName, lastName) => async (dispatch, getState) => {
     console.error("Edit User Error:", error);
   }
 };
-
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");

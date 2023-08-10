@@ -24,13 +24,13 @@ const TransactionItem = ({ transaction }) => {
         <div className="transaction-details">
           <p>Transaction Type: Electronic</p>
           <p>
-            Category: Food
+            Category: {transaction.category}
             <button>
               <FontAwesomeIcon icon={faPen} />
             </button>
           </p>
           <p>
-            notes:
+            notes: {transaction.notes}
             <button>
               <FontAwesomeIcon icon={faPen} />
             </button>

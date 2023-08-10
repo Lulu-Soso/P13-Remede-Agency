@@ -2,8 +2,6 @@ import React from "react";
 import FeatureItem from "./FeatureItem";
 import featuresData from "../mockData/featuresData";
 
-console.log(featuresData);
-
 const Features = () => {
   return (
     <section className="features">

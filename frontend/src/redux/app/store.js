@@ -3,7 +3,7 @@ import rootReducer from "../reducers"
 
 const store = configureStore({
   reducer: rootReducer,
-  devTools: true
+  // devTools: false
 })
 
 export default store;

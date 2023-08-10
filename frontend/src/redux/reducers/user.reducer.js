@@ -5,8 +5,8 @@ const storedUserData = JSON.parse(localStorage.getItem('userData'));
 const storedToken = localStorage.getItem('token');
 
 const initialState = {
-  userData: storedUserData || {}, // Définir userData à partir des données du localStorage
-  token: storedToken || '', // Définir le token à partir des données du localStorage
+  userData: storedUserData || {},
+  token: storedToken || '',
   errorState: '',
 };
 

@@ -14,6 +14,12 @@ const LoginPage = () => {
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.user.token);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    dispatch(loginUser(email, password));
+  };
+
   // useEffect pour surveiller les changements de userData
   useEffect(() => {
     // userData est mis à jour, vérifiez si les données utilisateur sont valides
@@ -21,12 +27,6 @@ const LoginPage = () => {
       navigate("/profile");
     }
   }, [token, navigate]);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    dispatch(loginUser(email, password));
-  };
 
   return (
     <main className="main bg-dark">

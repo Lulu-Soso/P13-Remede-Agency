@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
-  createRoutesFromChildren,
+  createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -21,7 +21,7 @@ const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 const TransactionsPage = React.lazy(() => import("./pages/TransactionsPage"));
 
 const router = createBrowserRouter(
-  createRoutesFromChildren(
+  createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
